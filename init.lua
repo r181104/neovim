@@ -136,7 +136,7 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
-vim.lsp.enable({ "lua_ls" })
+vim.lsp.enable({ "lua_ls", "gopls" })
 
 require("conform").setup({
 	formatters_by_ft = {
@@ -232,7 +232,7 @@ map("n", "<leader>fd", vim.diagnostic.open_float)
 map("n", "<leader>ca", vim.lsp.buf.code_action)
 map("n", "<leader>gr", vim.lsp.buf.references)
 map("n", "<leader>rn", vim.lsp.buf.rename)
-map("n", "<leader>for",	vim.lsp.buf.format)
+map("n", "<leader>for", vim.lsp.buf.format)
 
 map("n", "<leader>fe", vim.diagnostic.open_float, { desc = "Show diagnostics" })
 map("n", "<leader>ce", vim.diagnostic.setqflist, { desc = "Diagnostics to quickfix" })
