@@ -36,104 +36,162 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.pack.add({
-    { src = "https://github.com/christoomey/vim-tmux-navigator" },
-    { src = "https://github.com/folke/which-key.nvim" },
-    { src = "https://github.com/rcarriga/nvim-notify" },
-    { src = "https://github.com/MunifTanjim/nui.nvim" },
-    { src = "https://github.com/folke/noice.nvim" },
-    { src = "https://github.com/lewis6991/gitsigns.nvim" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-    { src = "https://github.com/navarasu/onedark.nvim" },
-    { src = "https://github.com/nvim-lualine/lualine.nvim" },
-    { src = "https://github.com/kdheepak/lazygit.nvim" },
-    { src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/christoomey/vim-tmux-navigator" },
+	{ src = "https://github.com/folke/which-key.nvim" },
+	{ src = "https://github.com/rcarriga/nvim-notify" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	{ src = "https://github.com/folke/noice.nvim" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/navarasu/onedark.nvim" },
+	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
+	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/stevearc/conform.nvim" },
 })
 
 -- Color Scheme
-require "onedark".setup({
-    style = "warmer",
-    transparent = true,
-    term_colors = true,
-    code_style = {
-        comments = 'italic',
-        keywords = 'bold',
-        functions = 'bold,italic',
-        strings = 'italic',
-        variables = 'bold'
-    },
-    colors = {},
-    highlights = {},
-    diagnostics = {
-        darker = true,
-        undercurl = true,
-        background = true,
-    }
+require("onedark").setup({
+	style = "warmer",
+	transparent = true,
+	term_colors = true,
+	code_style = {
+		comments = "italic",
+		keywords = "bold",
+		functions = "bold,italic",
+		strings = "italic",
+		variables = "bold",
+	},
+	colors = {},
+	highlights = {},
+	diagnostics = {
+		darker = true,
+		undercurl = true,
+		background = true,
+	},
 })
-require('onedark').load()
+require("onedark").load()
 
 -- LuaLine
 require("lualine").setup({
-    options = {
-        theme = "onedark",
-        style = "warmer",
-        section_separators = { left = "", right = "" },
-        component_separators = { left = "", right = "" },
-    },
-    sections = {
-        lualine_a = { "mode" },
-        lualine_b = { "branch", "diff" },
-        lualine_c = { "filename" },
-        lualine_x = { "encoding", "fileformat", "filetype" },
-        lualine_y = { "progress" },
-        lualine_z = { "location" },
-    }
+	options = {
+		theme = "onedark",
+		style = "warmer",
+		section_separators = { left = "", right = "" },
+		component_separators = { left = "", right = "" },
+	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "diff" },
+		lualine_c = { "filename" },
+		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_y = { "progress" },
+		lualine_z = { "location" },
+	},
 })
 
 -- For Commandline
 require("noice").setup({
-    lsp = {
-        override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-        },
-    },
-    presets = {
-        bottom_search = true,
-        command_palette = true,
-        long_message_to_split = true,
-        inc_rename = false,
-        lsp_doc_border = false,
-    }
+	lsp = {
+		override = {
+			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+			["vim.lsp.util.stylize_markdown"] = true,
+			["cmp.entry.get_documentation"] = true,
+		},
+	},
+	presets = {
+		bottom_search = true,
+		command_palette = true,
+		long_message_to_split = true,
+		inc_rename = false,
+		lsp_doc_border = false,
+	},
 })
 
 -- Git Signs
 require("gitsigns").setup({
-    signs = {
-        add = { text = "+" },
-        change = { text = "~" },
-        delete = { text = "_" },
-    }
+	signs = {
+		add = { text = "+" },
+		change = { text = "~" },
+		delete = { text = "_" },
+	},
 })
 vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", { desc = "Git blame" })
 
 -- Notifications
 require("notify").setup({
-    background_colour = "#000000",
+	background_colour = "#000000",
 })
 
 -- For syntax highlighting
-require 'nvim-treesitter.configs'.setup {
-    auto_install = true,
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    }
-}
+require("nvim-treesitter.configs").setup({
+	auto_install = true,
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false,
+	},
+})
+
+require("conform").setup({
+	formatters_by_ft = {
+		-- Lua
+		lua = { "stylua" },
+		-- Python
+		python = { "isort", "black" },
+		-- JavaScript/TypeScript/JSX/TSX
+		javascript = { { "prettierd", "prettier" } },
+		javascriptreact = { { "prettierd", "prettier" } },
+		typescript = { { "prettierd", "prettier" } },
+		typescriptreact = { { "prettierd", "prettier" } },
+		-- JSON
+		json = { { "prettierd", "prettier" } },
+		-- HTML/CSS/SCSS
+		html = { { "prettierd", "prettier" } },
+		css = { { "prettierd", "prettier" } },
+		scss = { { "prettierd", "prettier" } },
+		-- Markdown
+		markdown = { { "prettierd", "prettier" } },
+		-- Go
+		go = { "gofumpt", "goimports" },
+		-- Rust
+		rust = { "rustfmt" },
+		-- Nix
+		nix = { "nixpkgs-fmt" },
+		-- Shell
+		sh = { "shfmt" },
+		-- YAML
+		yaml = { "yamlfmt" },
+		-- C/C++
+		c = { "clang-format" },
+		cpp = { "clang-format" },
+		-- Java
+		java = { "google-java-format" },
+		-- SQL
+		sql = { "sqlfmt" },
+	},
+})
+vim.keymap.set({ "n", "v" }, "<leader>fm", function()
+	require("conform").format({
+		async = true,
+		lsp_fallback = true,
+		timeout_ms = 500,
+	})
+end, { desc = "[F]or[m]at buffer" })
+vim.keymap.set("v", "<leader>f", function()
+	require("conform").format({
+		async = true,
+		lsp_fallback = true,
+		range = {
+			["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+			["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+		},
+	})
+end, { desc = "[F]ormat selection" })
 
 -- Key mappings
 local map = vim.keymap.set
-map('n', '<leader>so', ':update<CR> :source<CR>')
+map("n", "<leader>so", ":update<CR> :source<CR>")
+map("n", "<leader>si", ":update<CR> :source ~/.config/nvim/init.lua <CR>")
 map("n", "<leader>w", ":write<CR>", { desc = "Save file" })
 map("n", "<leader>q", ":quit<CR>", { desc = "Quit" })
 map("n", "<leader>ter", ":vsplit | terminal<CR>", { desc = "Opens a terminal in vertical split" })
@@ -145,15 +203,17 @@ map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Move to right split" 
 map("n", "<leader>git", ":LazyGit<CR>", { desc = "Open LazyGit" })
 
 local bufopts = { noremap = true, silent = true, buffer = bufnr }
-map('n', 'gD', vim.lsp.buf.declaration, bufopts)
-map('n', 'gd', vim.lsp.buf.definition, bufopts)
-map('n', 'K', vim.lsp.buf.hover, bufopts)
-map('n', 'gi', vim.lsp.buf.implementation, bufopts)
-map('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-map('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-map('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-map('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-map('n', 'gr', vim.lsp.buf.references, bufopts)
-map('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+map("n", "gD", vim.lsp.buf.declaration, bufopts)
+map("n", "gd", vim.lsp.buf.definition, bufopts)
+map("n", "K", vim.lsp.buf.hover, bufopts)
+map("n", "gi", vim.lsp.buf.implementation, bufopts)
+map("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+map("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+map("n", "gr", vim.lsp.buf.references, bufopts)
+map("n", "<leader>for", function()
+	vim.lsp.buf.format({ async = true })
+end, bufopts)
 
 vim.cmd(":hi statusline guibg=NONE")
