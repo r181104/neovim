@@ -136,7 +136,7 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
-vim.lsp.enable({ "lua_ls", "gopls", "rust_analyzer", "pyright" })
+vim.lsp.enable({ "lua_ls", "gopls", "rust_analyzer", "pyright", "html", "cssls", "jsonls", "eslint" })
 
 require("conform").setup({
 	formatters_by_ft = {
