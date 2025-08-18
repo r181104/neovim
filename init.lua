@@ -40,7 +40,7 @@ vim.fn.mkdir(undodir, "p")
 vim.o.undodir = undodir
 vim.o.undofile = true
 
-vim.o.hlsearch = true
+vim.o.hlsearch = false
 vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.winborder = "rounded"
@@ -197,10 +197,12 @@ vim.lsp.enable({
 	"gopls",
 	"rust_analyzer",
 	"pyright",
+	"clangd",
 	"html",
 	"cssls",
 	"jsonls",
 	"eslint",
+	"nixd",
 })
 
 -- =============================
@@ -252,7 +254,7 @@ require("conform").setup({
 		markdown = { { "prettierd", "prettier" } },
 		go = { "gofumpt", "goimports" },
 		rust = { "rustfmt" },
-		nix = { "nixpkgs-fmt" },
+		nix = { "alejandra" },
 		sh = { "shfmt" },
 		yaml = { "yamlfmt" },
 		c = { "clang-format" },
