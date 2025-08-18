@@ -48,8 +48,12 @@ vim.pack.add({
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
+	{ src = "https://github.com/echasnovski/mini.pick" },
+	{ src = "https://github.com/stevearc/oil.nvim" },
 })
 
+require("mini.pick").setup()
+require("oil").setup()
 -- Color Scheme
 require("onedark").setup({
 	style = "warmer",
@@ -132,6 +136,8 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
+vim.lsp.enable({ "lua_ls" })
+
 require("conform").setup({
 	formatters_by_ft = {
 		-- Lua
@@ -194,26 +200,41 @@ map("n", "<leader>so", ":update<CR> :source<CR>")
 map("n", "<leader>si", ":update<CR> :source ~/.config/nvim/init.lua <CR>")
 map("n", "<leader>w", ":write<CR>", { desc = "Save file" })
 map("n", "<leader>q", ":quit<CR>", { desc = "Quit" })
-map("n", "<leader>ter", ":vsplit | terminal<CR>", { desc = "Opens a terminal in vertical split" })
 map({ "n", "v" }, "<Leader>y", '"+y', { noremap = true, silent = true, desc = "Yank to system clipboard" })
+
+map("n", "<leader>e", ":Oil<CR>")
+
+map("n", "<leader>git", ":LazyGit<CR>", { desc = "Open LazyGit" })
+map("n", "<leader>ter", ":vsplit | terminal<CR>", { desc = "Opens a terminal in vertical split" })
+
 map("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "Move to left split" })
 map("n", "<C-j>", "<cmd> TmuxNavigateDown<CR>", { desc = "Move to below split" })
 map("n", "<C-k>", "<cmd> TmuxNavigateUp<CR>", { desc = "Move to above split" })
 map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "Move to right split" })
-map("n", "<leader>git", ":LazyGit<CR>", { desc = "Open LazyGit" })
 
-local bufopts = { noremap = true, silent = true, buffer = bufnr }
-map("n", "gD", vim.lsp.buf.declaration, bufopts)
-map("n", "gd", vim.lsp.buf.definition, bufopts)
-map("n", "K", vim.lsp.buf.hover, bufopts)
-map("n", "gi", vim.lsp.buf.implementation, bufopts)
-map("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-map("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
-map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-map("n", "gr", vim.lsp.buf.references, bufopts)
-map("n", "<leader>for", function()
-	vim.lsp.buf.format({ async = true })
-end, bufopts)
+map("n", "<leader>ff", ":Pick files<CR>")
+map("n", "<leader>fh", ":Pick help<CR>")
+
+-- Prime's remaps
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("n", "J", "mzJ`z")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
+-- LSP
+map("n", "gd", vim.lsp.buf.definition)
+map("n", "K", vim.lsp.buf.hover)
+map("n", "<leader>ws", vim.lsp.buf.workspace_symbol)
+map("n", "<leader>fd", vim.diagnostic.open_float)
+map("n", "<leader>ca", vim.lsp.buf.code_action)
+map("n", "<leader>gr", vim.lsp.buf.references)
+map("n", "<leader>rn", vim.lsp.buf.rename)
+map("n", "<leader>for",	vim.lsp.buf.format)
+
+map("n", "<leader>fe", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+map("n", "<leader>ce", vim.diagnostic.setqflist, { desc = "Diagnostics to quickfix" })
 
 vim.cmd(":hi statusline guibg=NONE")
