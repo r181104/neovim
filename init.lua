@@ -249,11 +249,13 @@ conform.setup({
 		hyprlang = { "shfmt" },
 	},
 })
-
 vim.keymap.set({ "n", "v" }, "<leader>fm", function()
-	require("conform").format({ async = true, lsp_fallback = true, timeout_ms = 500 })
+	require("conform").format({
+		async = true,
+		lsp_fallback = true,
+		timeout_ms = 500,
+	})
 end, { desc = "[F]or[m]at buffer" })
-
 vim.keymap.set("v", "<leader>f", function()
 	require("conform").format({
 		async = true,
