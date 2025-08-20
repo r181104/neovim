@@ -52,27 +52,42 @@ vim.g.maplocalleader = "\\"
 -- Plugins
 -- =============================
 vim.pack.add({
-	{ src = "https://github.com/christoomey/vim-tmux-navigator" },
-	{ src = "https://github.com/folke/which-key.nvim" },
-	{ src = "https://github.com/rcarriga/nvim-notify" },
-	{ src = "https://github.com/MunifTanjim/nui.nvim" },
-	{ src = "https://github.com/folke/noice.nvim" },
-	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-	{ src = "https://github.com/navarasu/onedark.nvim" },
-	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
-	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+	-- Lsp and Formatting
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
+	-- Snippets and Completion
+	{ src = "https://github.com/L3MON4D3/LuaSnip" },
+	-- For better navigation when in tmux
+	{ src = "https://github.com/christoomey/vim-tmux-navigator" },
+	-- Just when you don't remember your own keybinds
+	{ src = "https://github.com/folke/which-key.nvim" },
+	-- Fuzzy finding or searching
 	{ src = "https://github.com/echasnovski/mini.pick" },
+	-- To get a good looking command line
+	{ src = "https://github.com/folke/noice.nvim" },
+	-- For colors
+	{ src = "https://github.com/navarasu/onedark.nvim" },
+	-- To blame
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+	-- For syntax highlighting
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	-- For customisation of status bar
+	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
+	-- To open lazygit in neovim
+	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+	-- File tree
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	-- Makes us see where something begins and where something ends as well
+	{ src = "https://github.com/lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+	-- Autopairs
 	{ src = "https://github.com/windwp/nvim-autopairs", event = "InsertEnter" },
-	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/saadparwaiz1/cmp_luasnip" },
-	{ src = "https://github.com/rafamadriz/friendly-snippets" },
-	{ src = "https://github.com/hrsh7th/nvim-cmp" },
+	-- Just so you know what's going on
+	{ src = "https://github.com/rcarriga/nvim-notify" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
+	-- To view color as you type them
 	{ src = "https://github.com/norcalli/nvim-colorizer.lua" },
+	-- Just wanted to try it don't really know how it works at the moment
 	{ src = "https://github.com/folke/trouble.nvim" },
 })
 
@@ -88,6 +103,19 @@ require("nvim-autopairs").setup({})
 
 -- Trouble
 require("trouble").setup({ icons = true })
+
+-- Git signs
+require("gitsigns").setup({ signs = { add = { "+" }, change = { "~" }, delete = { "_" } } })
+vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", { desc = "Git blame" })
+
+-- Notify
+require("notify").setup({ background_colour = "#000000" })
+
+-- Treesitter
+require("nvim-treesitter.configs").setup({
+	auto_install = true,
+	highlight = { enable = true, additional_vim_regex_highlighting = false },
+})
 
 -- Onedark color scheme
 require("onedark").setup({
@@ -139,19 +167,6 @@ require("noice").setup({
 		inc_rename = false,
 		lsp_doc_border = false,
 	},
-})
-
--- Git signs
-require("gitsigns").setup({ signs = { add = { "+" }, change = { "~" }, delete = { "_" } } })
-vim.keymap.set("n", "<leader>gb", ":Gitsigns blame_line<CR>", { desc = "Git blame" })
-
--- Notify
-require("notify").setup({ background_colour = "#000000" })
-
--- Treesitter
-require("nvim-treesitter.configs").setup({
-	auto_install = true,
-	highlight = { enable = true, additional_vim_regex_highlighting = false },
 })
 
 -- Oil file explorer
@@ -275,6 +290,39 @@ require("colorizer").setup({
 	},
 })
 
+local highlight = {
+	"RainbowRed",
+	"RainbowYellow",
+	"RainbowBlue",
+	"RainbowOrange",
+	"RainbowGreen",
+	"RainbowViolet",
+	"RainbowCyan",
+}
+local hooks = require("ibl.hooks")
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+	vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+	vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+	vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+	vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+	vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+	vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+	vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+end)
+require("ibl").setup({ indent = { highlight = highlight } })
+
+vim.diagnostic.config({
+	-- update_in_insert = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = "always",
+		header = "",
+		prefix = "",
+	},
+})
+
 -- =============================
 -- Key Mappings
 -- =============================
@@ -347,7 +395,7 @@ map("n", "]d", function()
 	require("trouble").previous({ skip_groups = true, jump = true })
 end)
 
--- LuaSnip
+-- Completion and Snippets
 local ls = require("luasnip")
 ls.filetype_extend("javascript", { "jsdoc" })
 map({ "i" }, "<C-s>e", function()
