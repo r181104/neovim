@@ -24,6 +24,6 @@ require("lazy").setup({
 	},
 	checker = { enabled = true },
 })
-require("options")
+require("opts")
 require("auto")
 require("maps")
