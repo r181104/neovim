@@ -1,8 +1,6 @@
--- =============================
--- Basic Options
--- =============================
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.title = true
 vim.o.termguicolors = true
 vim.o.cursorline = true
 vim.o.cursorcolumn = true
@@ -43,14 +41,6 @@ vim.o.winborder = "rounded"
 
 vim.g.have_nerd_font = true
 
-vim.diagnostic.config({
-	update_in_insert = true,
-	float = {
-		focusable = false,
-		style = "minimal",
-		border = "rounded",
-		source = "always",
-		header = "",
-		prefix = "",
-	},
-})
+vim.scriptencoding = "utf-8"
+vim.o.encoding = "utf-8"
+vim.o.fileencoding = "utf-8"

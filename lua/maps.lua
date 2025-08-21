@@ -3,7 +3,7 @@ local pick = require("mini.pick")
 
 -- General
 map("n", "<leader>so", ":update<CR> :source<CR>")
-map("n", "<leader>si", ":update<CR> :source ~/.config/nvim/init.lua <CR>")
+map("n", "<leader>si", "source ~/.config/nvim/init.lua<CR>")
 map("n", "<leader>rr", ":restart<CR>")
 map("n", "<leader>w", ":write<CR>", { desc = "Save file" })
 map("n", "<leader>q", ":quit<CR>", { desc = "Quit" })
