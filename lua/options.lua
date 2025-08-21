@@ -37,10 +37,12 @@ vim.fn.mkdir(undodir, "p")
 vim.o.undodir = undodir
 vim.o.undofile = true
 
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.winborder = "rounded"
+
+vim.g.have_nerd_font = true
 
 vim.diagnostic.config({
 	update_in_insert = true,
