@@ -1,43 +1,19 @@
 return {
 	"neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = { "saghen/blink.cmp" },
 	config = function()
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
-		vim.lsp.config("*", {
-			capabilities = capabilities,
-		})
-		vim.lsp.config("clangd", {})
-		vim.lsp.config("gopls", {})
-		vim.lsp.config("pylsp", {})
-		vim.lsp.config("html", {})
-		vim.lsp.config("cssls", {})
-		vim.lsp.config("jsonls", {})
-		vim.lsp.config("eslint", {})
-		vim.lsp.config("nixd", {})
-		vim.lsp.config("hyprls", {})
-		vim.lsp.config("rust_analyzer", {})
-		vim.lsp.config("lua_ls", {
-			settings = {
-				Lua = {
-					completion = {
-						callSnippet = "Replace",
-					},
-				},
-			},
-		})
-		vim.lsp.enable({
-			"clangd",
-			"gopls",
-			"pylsp",
-			"html",
-			"cssls",
-			"jsonls",
-			"eslint",
-			"nixd",
-			"hyprls",
-			"rust_analyzer",
-			"lua_ls",
-		})
+		local lspconfig = require("lspconfig")
+		lspconfig.lua_ls.setup({ capabilities = capabilities })
+		lspconfig.clangd.setup({ capabilities = capabilities })
+		lspconfig.gopls.setup({ capabilities = capabilities })
+		lspconfig.pyright.setup({ capabilities = capabilities })
+		lspconfig.html.setup({ capabilities = capabilities })
+		lspconfig.cssls.setup({ capabilities = capabilities })
+		lspconfig.jsonls.setup({ capabilities = capabilities })
+		lspconfig.eslint.setup({ capabilities = capabilities })
+		lspconfig.hyprls.setup({ capabilities = capabilities })
+		lspconfig.rust_analyzer.setup({ capabilities = capabilities })
 	end,
 }

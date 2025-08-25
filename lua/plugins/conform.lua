@@ -20,12 +20,21 @@ return {
 				rust = { "rustfmt" },
 				nix = { "alejandra" },
 				sh = { "shfmt" },
+				bash = { "shfmt" },
+				fish = { "fish_indent" },
 				yaml = { "yamlfmt" },
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				java = { "google-java-format" },
 				sql = { "sqlfmt" },
 				hyprlang = { "shfmt" },
+			},
+			formatters = {
+				fish_indent = {
+					command = "fish_indent",
+					args = { "--write", "-" },
+					stdin = true,
+				},
 			},
 		})
 	end,
